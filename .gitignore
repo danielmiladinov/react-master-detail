@@ -1,0 +1,5 @@
+dist
+/bower_components
+/js-built
+/node_modules
+.*
