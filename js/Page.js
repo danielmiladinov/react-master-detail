@@ -34,13 +34,16 @@ define([
         },
 
         onFormChange: function (value) {
-            //var nextCollection = $.extend(true, [], this.state.collection);
-            //var nextRecord = _.findWhere(nextCollection, { id: value.id });
-            //_.extend(nextRecord, value, { revision: value.revision + 1 });
+            this.setState({ formValue: value });
+        },
 
+        onFormSave: function () {
+            var nextCollection = $.extend(true, [], this.state.collection);
+            var nextRecord = _.findWhere(nextCollection, { id: this.state.formValue.id });
+            // the record is a ref into the collection, mutate it
+            _.extend(nextRecord, this.state.formValue, { revision: this.state.formValue.revision + 1 });
             this.setState({
-                //collection: nextCollection,
-                formValue: value
+                collection: nextCollection
             });
         }
     });
