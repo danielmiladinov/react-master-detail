@@ -43,7 +43,8 @@ define([
             // the record is a ref into the collection, mutate it
             _.extend(nextRecord, this.state.formValue, { revision: this.state.formValue.revision + 1 });
             this.setState({
-                collection: nextCollection
+                collection: nextCollection,
+                formValue: nextRecord
             });
         }
     });
