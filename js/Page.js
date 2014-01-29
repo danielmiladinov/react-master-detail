@@ -34,24 +34,25 @@ define([
                 <div className="App">
                     <MasterDetail
                         model={ContactModel} collection={this.state.collection}
-                        formValue={this.state.a.b.formValue} onFormChange={this.onChangeABForm} />
+                        formValue={this.state.a.b.formValue} onFormChange={_.partial(this.onChange, ['a', 'b', 'formValue'])} />
                     <button onClick={this.onFormSaveAB}>Save</button>
                     <MasterDetail
                         model={ContactModel} collection={this.state.collection}
-                        formValue={this.state.a.c.formValue} onFormChange={this.onChangeACForm} />
+                        formValue={this.state.a.c.formValue} onFormChange={_.partial(this.onChange, ['a', 'c', 'formValue'])} />
                     <button onClick={this.onFormSaveAC}>Save</button>
                     <pre>{JSON.stringify(this.state, undefined, 2)}</pre>
                 </div>
-            );
+                );
         },
 
-        onChangeABForm: function (value) {
+        onChange: function (path, value) {
             var nextState = util.deepClone(this.state);
-            nextState.a.b.formValue = value;
+            var scoped = getReferenceForPath(nextState, _.initial(path));
+            scoped[_.last(path)] = value;
             this.setState(nextState);
         },
 
-        onFormSaveAB: function () {
+        onFormSaveAB: function (path) {
             var record = _.findWhere(this.state.collection, { id: this.state.a.b.formValue.id });
             var nextRecord = $.extend(true, {}, record, this.state.a.b.formValue, { revision: this.state.a.b.formValue.revision + 1 });
 
@@ -63,12 +64,6 @@ define([
             var nextState = util.deepClone(this.state);
             nextState.collection = nextCollection;
             nextState.a.b.formValue = nextRecord;
-            this.setState(nextState);
-        },
-
-        onChangeACForm: function (value) {
-            var nextState = util.deepClone(this.state);
-            nextState.a.c.formValue = value;
             this.setState(nextState);
         },
 
@@ -88,6 +83,17 @@ define([
             this.setState(nextState);
         }
     });
+
+
+    /**
+     * Must return a reference into the scoped value (that we can mutate on purpose)
+     */
+    function getReferenceForPath (value, pathVector) {
+        for (var i = 0; i < pathVector.length; i++) {
+            value = value[pathVector[i]];
+        }
+        return value;
+    }
 
 
     function entrypoint(rootEl) {
