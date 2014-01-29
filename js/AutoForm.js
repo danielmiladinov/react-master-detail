@@ -31,7 +31,7 @@ define([
                         <AutoControl
                             fieldInfo={fieldInfo}
                             value={this.props.value[fieldInfo.name]}
-                            onChange={_.partial(this.onFieldChange, fieldInfo.name)} />
+                            onChange={_.partial(this.props.onChange, [fieldInfo.name])} />
                     </FormField>
                 );
             }.bind(this));
@@ -42,11 +42,6 @@ define([
                     <div className="formClear"/>
                 </div>
             );
-        },
-
-        onFieldChange: function (fieldName, value) {
-            var nextValue = _.extend({}, this.props.value, _.object([[fieldName, value]]))
-            this.props.onChange(nextValue);
         }
     });
 

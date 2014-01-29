@@ -11,8 +11,8 @@ define([
             return {
                 model: undefined,
                 collection: undefined,
-                formValue: undefined,
-                onFormChange: undefined     // any time the value of the form changes
+                value: undefined,
+                onChange: undefined     // any time the value of the form changes
             };
         },
 
@@ -26,15 +26,15 @@ define([
                     <ol>{list}</ol>
                     <AutoForm
                         model={this.props.model}
-                        value={this.props.formValue}
-                        onChange={this.props.onFormChange} />
+                        value={this.props.value}
+                        onChange={_.partial(this.props.onChange)} />
                 </div>
             );
         },
 
         onTargetChange: function (recordId) {
             // dirty check here
-            this.props.onFormChange(_.findWhere(this.props.collection, { id: recordId }));
+            this.props.onChange(_.findWhere(this.props.collection, { id: recordId }));
         }
     });
 

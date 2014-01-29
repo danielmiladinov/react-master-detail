@@ -34,18 +34,21 @@ define([
                 <div className="App">
                     <MasterDetail
                         model={ContactModel} collection={this.state.collection}
-                        formValue={this.state.a.b.formValue} onFormChange={_.partial(this.onChange, ['a', 'b', 'formValue'])} />
+                        value={this.state.a.b.formValue} onChange={_.partial(this.onChange, ['a', 'b', 'formValue'])} />
                     <button onClick={this.onFormSaveAB}>Save</button>
                     <MasterDetail
                         model={ContactModel} collection={this.state.collection}
-                        formValue={this.state.a.c.formValue} onFormChange={_.partial(this.onChange, ['a', 'c', 'formValue'])} />
+                        value={this.state.a.c.formValue} onChange={_.partial(this.onChange, ['a', 'c', 'formValue'])} />
                     <button onClick={this.onFormSaveAC}>Save</button>
                     <pre>{JSON.stringify(this.state, undefined, 2)}</pre>
                 </div>
                 );
         },
 
-        onChange: function (path, value) {
+        onChange: function (path, /* more paths,*/ value) {
+            path = _.flatten(_.initial(arguments));
+            value = _.last(arguments);
+
             var nextState = util.deepClone(this.state);
             var scoped = getReferenceForPath(nextState, _.initial(path));
             scoped[_.last(path)] = value;
