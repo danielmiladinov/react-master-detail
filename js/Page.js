@@ -16,7 +16,11 @@ define([
         getInitialState: function () {
             return {
                 collection: contacts, // source of truth/database state
-                formValue: {} // value the editor is currently targetting
+                a: {
+                    b: {
+                        formValue: {} // value the editor is currently targetting
+                    }
+                }
             };
         },
 
@@ -25,26 +29,25 @@ define([
                 <div className="App">
                     <MasterDetail
                         model={ContactModel} collection={this.state.collection}
-                        formValue={this.state.formValue}
-                        onFormChange={this.onFormChange} />
+                        formValue={this.state.a.b.formValue} onFormChange={this.onChangeABForm} />
                     <button onClick={this.onFormSave}>Save</button>
-                    <pre>{JSON.stringify(this.state.collection, undefined, 2)}</pre>
+                    <pre>{JSON.stringify(this.state, undefined, 2)}</pre>
                 </div>
             );
         },
 
-        onFormChange: function (value) {
-            this.setState({ formValue: value });
+        onChangeABForm: function (value) {
+            this.setState({ a: { b: { formValue: value }}});
         },
 
         onFormSave: function () {
             var nextCollection = $.extend(true, [], this.state.collection);
-            var nextRecord = _.findWhere(nextCollection, { id: this.state.formValue.id });
+            var nextRecord = _.findWhere(nextCollection, { id: this.state.a.b.formValue.id });
             // the record is a ref into the collection, mutate it
-            _.extend(nextRecord, this.state.formValue, { revision: this.state.formValue.revision + 1 });
+            _.extend(nextRecord, this.state.a.b.formValue, { revision: this.state.a.b.formValue.revision + 1 });
             this.setState({
                 collection: nextCollection,
-                formValue: nextRecord
+                a: { b: { formValue: nextRecord }}
             });
         }
     });
