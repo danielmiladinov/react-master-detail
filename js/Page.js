@@ -18,12 +18,16 @@ define([
             return {
                 collection: contacts, // source of truth/database state
                 a: {
-                    b: {
-                        formValue: {} // value the editor is currently targetting
+                    MasterDetail1: {
+                        formValue: {}, // value the editor is currently targetting
+                        timer1: 7,
+                        timer2: 1
                     },
 
-                    c: {
-                        formValue: {}
+                    MasterDetail2: {
+                        formValue: {},
+                        timer1: 3,
+                        timer2: 5
                     }
                 }
             };
@@ -34,11 +38,11 @@ define([
                 <div className="App">
                     <MasterDetail
                         model={ContactModel} collection={this.state.collection}
-                        value={this.state.a.b.formValue} onChange={_.partial(this.onChange, ['a', 'b', 'formValue'])} />
+                        value={this.state.a.MasterDetail1} onChange={_.partial(this.onChange, ['a', 'MasterDetail1'])} />
                     <button onClick={this.onFormSaveAB}>Save</button>
                     <MasterDetail
                         model={ContactModel} collection={this.state.collection}
-                        value={this.state.a.c.formValue} onChange={_.partial(this.onChange, ['a', 'c', 'formValue'])} />
+                        value={this.state.a.MasterDetail2} onChange={_.partial(this.onChange, ['a', 'MasterDetail2'])} />
                     <button onClick={this.onFormSaveAC}>Save</button>
                     <pre>{JSON.stringify(this.state, undefined, 2)}</pre>
                 </div>
@@ -56,8 +60,8 @@ define([
         },
 
         onFormSaveAB: function (path) {
-            var record = _.findWhere(this.state.collection, { id: this.state.a.b.formValue.id });
-            var nextRecord = $.extend(true, {}, record, this.state.a.b.formValue, { revision: this.state.a.b.formValue.revision + 1 });
+            var record = _.findWhere(this.state.collection, { id: this.state.a.MasterDetail1.formValue.id });
+            var nextRecord = $.extend(true, {}, record, this.state.a.MasterDetail1.formValue, { revision: this.state.a.MasterDetail1.formValue.revision + 1 });
 
             // subtract out the stale record (old revision)
             // union in the new record into the nextCollection
@@ -66,13 +70,13 @@ define([
 
             var nextState = util.deepClone(this.state);
             nextState.collection = nextCollection;
-            nextState.a.b.formValue = nextRecord;
+            nextState.a.MasterDetail1.formValue = nextRecord;
             this.setState(nextState);
         },
 
         onFormSaveAC: function () {
-            var record = _.findWhere(this.state.collection, { id: this.state.a.c.formValue.id });
-            var nextRecord = $.extend(true, {}, record, this.state.a.c.formValue, { revision: this.state.a.c.formValue.revision + 1 });
+            var record = _.findWhere(this.state.collection, { id: this.state.a.MasterDetail2.formValue.id });
+            var nextRecord = $.extend(true, {}, record, this.state.a.MasterDetail2.formValue, { revision: this.state.a.MasterDetail2.formValue.revision + 1 });
 
             // subtract out the stale record (old revision)
             // union in the new record into the nextCollection
@@ -82,7 +86,7 @@ define([
 
             var nextState = util.deepClone(this.state);
             nextState.collection = nextCollection;
-            nextState.a.c.formValue = nextRecord;
+            nextState.a.MasterDetail2.formValue = nextRecord;
             this.setState(nextState);
         }
     });

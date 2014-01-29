@@ -1,7 +1,8 @@
 /** @jsx React.DOM */
 define([
-    'underscore', 'react', 'AutoForm'
-], function (_, React, AutoForm) {
+    'underscore', 'react', 'AutoForm',
+    'Timer'
+], function (_, React, AutoForm, Timer) {
     'use strict';
 
 
@@ -26,15 +27,21 @@ define([
                     <ol>{list}</ol>
                     <AutoForm
                         model={this.props.model}
-                        value={this.props.value}
-                        onChange={_.partial(this.props.onChange)} />
+                        value={this.props.value['formValue']}
+                        onChange={_.partial(this.props.onChange, ['formValue'])} />
+                    <Timer
+                        value={this.props.value['timer1']}
+                        onChange={_.partial(this.props.onChange, ['timer1'])} />
+                    <Timer
+                        value={this.props.value['timer2']}
+                        onChange={_.partial(this.props.onChange, ['timer2'])} />
                 </div>
             );
         },
 
         onTargetChange: function (recordId) {
             // dirty check here
-            this.props.onChange(_.findWhere(this.props.collection, { id: recordId }));
+            this.props.onChange(['formValue'], _.findWhere(this.props.collection, { id: recordId }));
         }
     });
 
