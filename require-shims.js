@@ -14,7 +14,8 @@
             'es5-shim': '../bower_components/es5-shim/es5-shim',
             'text': '../bower_components/requirejs-text/text',
             'wingspan-forms': '../bower_components/wingspan-forms/dist/wingspan-forms',
-            textassets: '../textassets' // all assets loaded via `text!` must be rooted here (to avoid JSX compilation)
+            textassets: '../textassets', // all assets loaded via `text!` must be rooted here (to avoid JSX compilation)
+            'mori': '../bower_components/mori/mori'
         },
         shim: {
             'underscore': { deps: [], exports: '_' },

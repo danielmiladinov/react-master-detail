@@ -10,8 +10,7 @@ define([
         getDefaultProps: function () {
             return {
                 model: undefined,
-                value: undefined,
-                onChange: undefined
+                cursor: undefined
             };
         },
 
@@ -30,8 +29,8 @@ define([
                     <FormField fieldInfo={fieldInfo} layout="formFieldInline" key={fieldInfo.name}>
                         <AutoControl
                             fieldInfo={fieldInfo}
-                            value={this.props.value[fieldInfo.name]}
-                            onChange={_.partial(this.props.onChange, [fieldInfo.name])} />
+                            value={this.props.cursor.get(fieldInfo.name)}
+                            onChange={_.partial(this.props.cursor.set, [fieldInfo.name])} />
                     </FormField>
                 );
             }.bind(this));

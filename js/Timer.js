@@ -8,13 +8,12 @@ define([
 
         getDefaultProps: function () {
             return {
-                value: undefined,
-                onChange: undefined
+                cursor: undefined
             };
         },
 
         tick: function() {
-            this.props.onChange(this.props.value + 1);
+            this.props.cursor.set(this.props.cursor.get() + 1);
         },
 
         componentDidMount: function() {
@@ -26,7 +25,7 @@ define([
         },
 
         render: function() {
-            return (<div>{'Seconds Elapsed: ' + this.props.value}</div>);
+            return (<div>{'Seconds Elapsed: ' + this.props.cursor.get()}</div>);
         }
     });
 
