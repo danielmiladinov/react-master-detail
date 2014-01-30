@@ -19,10 +19,10 @@ This project has a mandatory frontend build step.
     bower install  # fetch js dependencies
 
 ### build the `wingspan-forms` dependency
-(sorry, I just open sourced this in Janurary and it has rough edges)
+(sorry, I just open sourced this in January and it has rough edges)
 
     cd bower_components/wingspan-forms
-    npm install                   # this is a seperate project which also uses node plugins
+    npm install                   # this is a separate project which also uses node plugins
     bower install                 # and has its own dependencies
     grunt react less requirejs    # do the library build
 
