@@ -26,6 +26,7 @@
     "underscore.string": "~2.3.3",
     "kendo-ui": "~2013.3.1119",
     "es5-shim": "~2.1",
-    "wingspan-forms": "*"
+    "wingspan-forms": "*",
+    "mori": "~0.2.5"
   }
 }
