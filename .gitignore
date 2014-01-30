@@ -3,3 +3,4 @@ dist
 /js-built
 /node_modules
 .*
+*.iml
