@@ -54,7 +54,7 @@ define([
             value = _.last(arguments);
 
             var nextState = util.deepClone(this.state);
-            var scoped = getReferenceForPath(nextState, _.initial(path));
+            var scoped = dereference(nextState, _.initial(path));
             scoped[_.last(path)] = value;
             this.setState(nextState);
         },
@@ -95,13 +95,13 @@ define([
     /**
      * Must return a reference into the scoped value (that we can mutate on purpose)
      */
-    function getReferenceForPath (value, pathVector) {
-        for (var i = 0; i < pathVector.length; i++) {
-            value = value[pathVector[i]];
+    function dereference(value, pathVector) {
+        function apply(obj, prop) {
+            return obj[prop];
         }
-        return value;
-    }
 
+        return _.reduce(pathVector, apply, value);
+    }
 
     function entrypoint(rootEl) {
         React.renderComponent(<App/>, rootEl);
